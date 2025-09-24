@@ -3,6 +3,8 @@ package com.produit.produit.service;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
+
+import com.produit.produit.exceptions.ProduitNotFoundException;
 import com.produit.produit.model.Produit;
 import com.produit.produit.repository.ProduitRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +29,7 @@ public class ProduitService {
     public Produit getProduitById(Long id) {
         Optional<Produit> optionalProduit = produitRepository.findById(id);
         if (optionalProduit.isEmpty()) {
-            throw new RuntimeException("Produit introuvable");
+            throw new ProduitNotFoundException("Produit introuvable");
         }
         return optionalProduit.get();
     }
@@ -44,7 +46,7 @@ public class ProduitService {
     public Produit editProduit(Long id, Produit produit) {
         Optional<Produit> optionalProduit = produitRepository.findById(id);
         if (optionalProduit.isEmpty()) {
-            throw new RuntimeException("Impossible de modifier : Produit introuvable");
+            throw new ProduitNotFoundException("Impossible de modifier : Produit introuvable");
         }
         Produit existingProduit = optionalProduit.get();
         existingProduit.setName(produit.getName());
