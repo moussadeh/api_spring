@@ -5,8 +5,6 @@ import java.util.List;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -18,23 +16,17 @@ import lombok.Setter;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Getter
 @Setter
-@Builder
-@Table(name = "produit")
-public class Produit {
+@Table(name = "categorie")
+public class Categorie {
+
     @Id
     @GeneratedValue
-    private Long produit_id;
-
+    private long categorie_id;
     private String name;
-    private double price;
 
-    @ManyToMany
-    @JoinTable(
-        name = "produit_categorie",
-        joinColumns = @JoinColumn(name = "produit_id"),
-        inverseJoinColumns = @JoinColumn(name = "categorie_id")
-    )
-    private List<Categorie> categories;
+    @ManyToMany(mappedBy = "categories")
+    private List<Produit> produits;
 }
